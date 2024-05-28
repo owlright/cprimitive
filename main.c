@@ -55,7 +55,7 @@ int main(int argc, char** argv)
     glGenRenderbuffers(1, &rbo);
     glBindRenderbuffer(GL_RENDERBUFFER, rbo);
     glRenderbufferStorage(
-        GL_RENDERBUFFER, GL_RGB, 800, 600); // Assuming the framebuffer is 800x600 and the color format is RGB
+        GL_RENDERBUFFER, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, rbo);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -69,13 +69,13 @@ int main(int argc, char** argv)
                             // do so to keep things a bit more organized
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    GLubyte* pixels = (GLubyte*)malloc(800 * 600 * 3 * sizeof(GLubyte));
-    glReadPixels(0, 0, 800, 600, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    GLubyte* pixels = (GLubyte*)malloc(WINDOW_WIDTH * WINDOW_HEIGHT * 3 * sizeof(GLubyte));
+    glReadPixels(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, pixels);
     GLsizei nrChannels = 3;
-    GLsizei stride = nrChannels * 800;
+    GLsizei stride = nrChannels * WINDOW_WIDTH;
     stride += (stride % 4) ? (4 - stride % 4) : 0;
     // stbi_flip_vertically_on_write(1);
-    // stbi_write_png("output2.png", 800, 600, 3, pixels, stride);
+    // stbi_write_png("output2.png", WINDOW_WIDTH, WINDOW_HEIGHT, 3, pixels, stride);
     tlog_exit();
     glfwTerminate();
     return 0;
@@ -123,7 +123,7 @@ int check_glfw()
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glfwSetFramebufferSizeCallback(g->window, framebuffer_size_callback);
     GLint nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
