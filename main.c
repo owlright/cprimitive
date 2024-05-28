@@ -114,7 +114,7 @@ int check_glfw()
         return -1;
     }
 
-    // glfwMakeContextCurrent(g->window);
+    glfwMakeContextCurrent(g->window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         LOG_ERROR("Failed to initialize GLAD");
         return -1;
