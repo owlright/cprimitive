@@ -13,3 +13,5 @@ if(MSVC)
 endif()
 add_executable(primitive main.c stb_image.h stb_image_write.h config.h util.h util.c tlog.h tlog.c)
 target_link_libraries(primitive glfw glad::glad GLEW::GLEW)
+
+add_subdirectory(gui/)
