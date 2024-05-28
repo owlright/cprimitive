@@ -28,7 +28,7 @@ set(SRC_FILES
 
 if(WIN32)
     # Include a RC file for windows
-    list(APPEND SRC_FILES ../sample.rc)
+    list(APPEND SRC_FILES sample.rc)
 elseif(APPLE)
     # Add an icon for the apple .app file
     list(APPEND SRC_FILES ../../src/osx/carbon/wxmac.icns)
