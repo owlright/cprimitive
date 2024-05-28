@@ -1,4 +1,4 @@
-﻿#include <glad/glad.h> // Include the glad header file
+#include <glad/glad.h> // Include the glad header file
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -6,7 +6,7 @@
 
 #include "config.h"
 #include "util.h"
-#include "log.h"
+#include "tlog.h"
 
 typedef struct context {
     GLFWwindow* window;
@@ -26,6 +26,8 @@ int check_glfw();
 
 int main(int argc, char** argv)
 {
+    tlog_init("example.log", 1024 * 1024, 8, 0, TLOG_SCREEN_COLOR);
+    tlog_setlevel(TLOG_DEBUG);
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -87,6 +89,7 @@ int main(int argc, char** argv)
     stride += (stride % 4) ? (4 - stride % 4) : 0;
     // stbi_flip_vertically_on_write(1);
     // stbi_write_png("output2.png", 800, 600, 3, pixels, stride);
+    tlog_exit();
     glfwTerminate();
     return 0;
 }
@@ -109,14 +112,14 @@ void create_window()
 int check_glfw()
 {
     if (g->window == NULL) {
-        LOG_ERROR("Failed to create GLFW window");
+        tlog_error("Failed to create GLFW window");
         glfwTerminate();
         return -1;
     }
 
     glfwMakeContextCurrent(g->window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        LOG_ERROR("Failed to initialize GLAD");
+        tlog_error("Failed to initialize GLAD");
         return -1;
     }
 
@@ -124,6 +127,6 @@ int check_glfw()
     glfwSetFramebufferSizeCallback(g->window, framebuffer_size_callback);
     GLint nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    LOG_INFO("Max Number of vetex attribs: %d\n", nrAttributes);
+    tlog_debug("Max Number of vetex attribs: %d", nrAttributes);
     return 0;
 }

@@ -1,3 +1,4 @@
 .vscode/
 bin/
 cmake-build/
+*.log
