@@ -15,27 +15,15 @@ typedef struct context {
 static GlobalContext g_context;
 static GlobalContext* g = &g_context;
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void create_window();
 int check_glfw();
 
-
 int main(int argc, char** argv)
 {
-    tlog_init("example.log", 1024 * 1024, 8, 0, TLOG_SCREEN_COLOR);
+    tlog_init("primitive.log", 1024 * 1024, 8, 0, TLOG_SCREEN_COLOR);
     tlog_setlevel(TLOG_DEBUG);
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    // 创建一个隐藏的窗口，用于 OpenGL 上下文的创建
-    // glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
     create_window();
     if (check_glfw() == -1) {
         return -1;
@@ -74,7 +62,6 @@ int main(int argc, char** argv)
         printf("ERROR: Framebuffer is not complete!\n");
 
     glClearColor(0, 0, 0, 1);
-    ;
     glClear(GL_COLOR_BUFFER_BIT);
     // draw our first triangle
     glUseProgram(shaderProgram);
@@ -94,8 +81,21 @@ int main(int argc, char** argv)
     return 0;
 }
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}
+
 void create_window()
 {
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    // 创建一个隐藏的窗口，用于 OpenGL 上下文的创建
+    // glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
     int window_width = WINDOW_WIDTH;
     int window_height = WINDOW_HEIGHT;
     GLFWmonitor* monitor = NULL;
