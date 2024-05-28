@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "stb_image.h"
 #include "stb_image_write.h"
 
@@ -10,7 +11,7 @@ char* load_file(const char* path)
 {
     FILE* file = fopen(path, "rb");
     if (!file) {
-        // fprintf(stderr, "fopen %s failed: %d %s\n", path, errno, strerror(errno));
+        fprintf(stderr, "fopen %s failed: %d %s\n", path, errno, strerror(errno));
         exit(1);
     }
     fseek(file, 0, SEEK_END);
