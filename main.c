@@ -11,7 +11,7 @@
 #include "stb_image.h"
 #include "stb_image_write.h"
 
-typedef struct context {
+typedef struct _GlobalContext {
     GLFWwindow* window;
 } GlobalContext;
 
@@ -19,14 +19,14 @@ static GlobalContext g_context;
 static GlobalContext* g = &g_context;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void create_window();
+void create_window(int hidden);
 int check_glfw();
 
 int main(int argc, char** argv)
 {
-    create_window();
+    create_window(1);
     if (check_glfw() == -1) {
-        return -1;
+        exit(EXIT_FAILURE);
     }
     GLuint shaderProgram = load_program("../../shaders/vertex.glsl", "../../shaders/fragment.glsl");
 
@@ -77,7 +77,7 @@ int main(int argc, char** argv)
     // stbi_flip_vertically_on_write(1);
     // stbi_write_png("output2.png", WINDOW_WIDTH, WINDOW_HEIGHT, 3, pixels, stride);
     glfwTerminate();
-    return 0;
+    exit(EXIT_SUCCESS);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -85,7 +85,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void create_window()
+void create_window(int hidden)
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
