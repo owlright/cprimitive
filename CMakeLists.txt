@@ -15,3 +15,4 @@ add_executable(primitive main.c stb_image.h stb_image_write.h config.h util.h ut
 target_link_libraries(primitive glfw glad::glad)
 
 add_subdirectory(gui/)
+add_subdirectory(examples/)
