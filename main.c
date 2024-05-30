@@ -1,4 +1,4 @@
-﻿#include <glad/glad.h> // Include the glad header file
+#include <glad/glad.h> // Include the glad header file
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -8,6 +8,8 @@
 #include "util.h"
 #define LOG_COLOR (-1)
 #include "log.h"
+#include "stb_image.h"
+#include "stb_image_write.h"
 
 typedef struct context {
     GLFWwindow* window;

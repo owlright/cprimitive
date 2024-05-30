@@ -2,6 +2,8 @@
 #define UTIL_H
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+
 char* load_file(const char* path);
 GLuint make_shader(GLenum type, const char* source);
 GLuint load_shader(GLenum type, const char* path);

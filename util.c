@@ -1,12 +1,12 @@
-#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "util.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
-
 char* load_file(const char* path)
 {
     FILE* file = fopen(path, "rb");
