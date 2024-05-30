@@ -29,7 +29,13 @@ int main(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
     GLuint shaderProgram = load_program("../../shaders/vertex.glsl", "../../shaders/fragment.glsl");
-
+    GLint color_location = glGetUniformLocation(shaderProgram, "ourColor");
+    if (color_location == -1) {
+        log_error("Could not find uniform variable 'ourColor'");
+        exit(EXIT_FAILURE);
+    }
+    glUseProgram(shaderProgram);
+    glUniform3f(color_location, 1.0f, 0.0f, 0.0f);
     /* -------------------------------------------------------------------------- */
     /*     set up vertex data (and buffer(s)) and configure vertex attributes     */
     /* -------------------------------------------------------------------------- */
@@ -115,6 +121,6 @@ int check_glfw()
     glfwSetFramebufferSizeCallback(g->window, framebuffer_size_callback);
     GLint nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    log_debug("Max Number of vetex attribs: %d", nrAttributes);
+    log_info("Max Number of vetex attribs: %d", nrAttributes);
     return 0;
 }
