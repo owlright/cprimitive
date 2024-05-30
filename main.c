@@ -65,9 +65,14 @@ int main(int argc, char** argv)
     GLsizei nrChannels = 4;
     GLsizei stride = nrChannels * WINDOW_WIDTH;
     stride += (stride % 4) ? (4 - stride % 4) : 0;
-    // stbi_flip_vertically_on_write(1);
+    stbi_flip_vertically_on_write(1);
     stbi_write_png("output3.png", WINDOW_WIDTH, WINDOW_HEIGHT, 4, pixels, stride);
     glfwDestroyWindow(g->window);
+    int totalPixels = WINDOW_WIDTH * WINDOW_HEIGHT * 4; // 4 for RGBA channels
+    // for (int i = 0; i < totalPixels; i += 4) {
+    //     if (pixels[i + 3] != 0)
+    //     printf("Pixel at index %d: R=%d, G=%d, B=%d, A=%d\n", i / 4, pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3]);
+    // }
     free(pixels);
     glfwTerminate();
     exit(EXIT_SUCCESS);
