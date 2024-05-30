@@ -1,4 +1,4 @@
-#include <glad/glad.h> // Include the glad header file
+﻿#include <glad/glad.h> // Include the glad header file
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -39,43 +39,30 @@ int main(int argc, char** argv)
         0.0f, 0.5f, 0.0f // top
     };
 
-    GLuint VAO;
+    GLuint VAO, VBO;
     glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
     glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    // 创建 FBO 和渲染缓冲对象
-    GLuint fbo;
-    glGenFramebuffers(1, &fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-    GLuint rbo;
-    glGenRenderbuffers(1, &rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage(
-        GL_RENDERBUFFER, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, rbo);
-
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        printf("ERROR: Framebuffer is not complete!\n");
-
     glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
     // draw our first triangle
     glUseProgram(shaderProgram);
-    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll
-                            // do so to keep things a bit more organized
+    glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    GLubyte* pixels = (GLubyte*)malloc(WINDOW_WIDTH * WINDOW_HEIGHT * 3 * sizeof(GLubyte));
-    glReadPixels(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-    GLsizei nrChannels = 3;
+    glFinish();
+    GLubyte* pixels = (GLubyte*)calloc(4, WINDOW_WIDTH * WINDOW_HEIGHT * sizeof(GLubyte));
+    glReadPixels(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    GLsizei nrChannels = 4;
     GLsizei stride = nrChannels * WINDOW_WIDTH;
     stride += (stride % 4) ? (4 - stride % 4) : 0;
     // stbi_flip_vertically_on_write(1);
-    // stbi_write_png("output2.png", WINDOW_WIDTH, WINDOW_HEIGHT, 3, pixels, stride);
+    stbi_write_png("output3.png", WINDOW_WIDTH, WINDOW_HEIGHT, 4, pixels, stride);
+    glfwDestroyWindow(g->window);
+    free(pixels);
     glfwTerminate();
     exit(EXIT_SUCCESS);
 }
@@ -93,8 +80,10 @@ void create_window(int hidden)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    // 创建一个隐藏的窗口，用于 OpenGL 上下文的创建
-    // glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+    if (hidden > 0) {
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+    }
+
     int window_width = WINDOW_WIDTH;
     int window_height = WINDOW_HEIGHT;
     GLFWmonitor* monitor = NULL;
