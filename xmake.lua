@@ -1,9 +1,15 @@
 add_rules("mode.debug", "mode.release")
-add_requires("glad 0.1.36", "glfw 3.4")
+add_requires("glad 0.1.36", "glfw 3.4", "opencl")
 target("primitive")
     set_kind("binary")
     add_files("*.c")
     add_packages("glad", "glfw")
+    set_targetdir("$(projectdir)/bin/$(mode)")
+
+target("opcl")
+    set_kind("binary")
+    add_files("test_opencl.cc")
+    add_packages("opencl")
     set_targetdir("$(projectdir)/bin/$(mode)")
 
 includes("examples")
