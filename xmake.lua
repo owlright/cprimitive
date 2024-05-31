@@ -4,8 +4,9 @@ target("primitive")
     set_kind("binary")
     add_files("*.c")
     add_packages("glad", "glfw")
-    set_targetdir("bin/Debug")
+    set_targetdir("$(projectdir)/bin/$(mode)")
 
+includes("examples")
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
 --
