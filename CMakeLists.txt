@@ -16,3 +16,5 @@ target_link_libraries(primitive glfw glad::glad)
 
 add_subdirectory(gui/)
 add_subdirectory(examples/)
+
+add_executable(shape shape.c)
