@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "shape.h"
 
-// ! IShape写在一开始就相当于继承了IShape这个接口
 typedef struct {
     IShape* methods;
     int X1, Y1;

@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "triangle.h"
 #include "log.h"
+
 static RasterizedLines RasterizeTrangle(void* obj)
 {
     log_info_no_args();
@@ -13,14 +14,12 @@ static RasterizedLines RasterizeTrangle(void* obj)
     return result;
 }
 
-// ! 2. 将Triangele的方法实现绑定到IShape上
-// ! 这里没有实现IShape的Destroy方法，可能会很危险
+// ! 将Triangele的方法实现绑定到IShape上
 static IShape triangle_methods = {
     .Rasterize = RasterizeTrangle,
     .Destroy = NULL
 };
 
-// ! 3. 实现Triangle的构造函数
 Triangle* newTriangle()
 {
     Triangle* c = malloc(sizeof(Triangle));
