@@ -9,7 +9,7 @@ typedef struct {
 
 typedef struct {
     Scanline** lines;
-    int w, h;
+    int h;
 } RasterizedLines;
 
 void DestroyRasterizedLines(void* obj);

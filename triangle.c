@@ -10,7 +10,7 @@ static RasterizedLines RasterizeTrangle(void* obj)
     for (int i = 0; i < 3; i++) {
         lines[i] = calloc(3, sizeof(Scanline));
     }
-    RasterizedLines result = { lines, 3, 3 };
+    RasterizedLines result = { .lines = lines, .h = 3};
     return result;
 }
 
