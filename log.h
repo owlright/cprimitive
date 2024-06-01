@@ -2,6 +2,7 @@
 #define LOG_H
 #include <errno.h>
 #include <string.h>
+#include <stdio.h>
 #ifndef LOG_LEVEL
 #define LOG_LEVEL (7)
 #endif
