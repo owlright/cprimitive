@@ -1,4 +1,4 @@
-﻿#include <glad/glad.h> // Include the glad header file
+#include <glad/glad.h> // Include the glad header file
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
