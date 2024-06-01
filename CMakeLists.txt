@@ -18,3 +18,4 @@ add_subdirectory(gui/)
 add_subdirectory(examples/)
 
 add_executable(shape shape.c rasterizer.c triangle.c test_shape.c)
+add_executable(line shape.c line.c rasterizer.c test_line.c)
