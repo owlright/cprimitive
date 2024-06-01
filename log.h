@@ -58,7 +58,7 @@
 #define log_notice(M, ...)  do { fprintf(stderr, CYAN   "[NOTICE]  " "%s (%s:%d) " NONE M YELLOW " errno: %s\n" NONE, __func__, __FILE__, __LINE__, ##__VA_ARGS__, clean_errno()); } while(0)
 #define log_info(M, ...)    do { fprintf(stderr, GREEN  "[INFO]    " "%s (%s:%d) " NONE M "\n", __func__, __FILE__, __LINE__, ##__VA_ARGS__); } while(0)
 #define log_debug(M, ...)   do { fprintf(stderr, GRAY   "[DEBUG]   " "%s (%s:%d) " NONE M "\n", __func__, __FILE__, __LINE__, ##__VA_ARGS__); } while(0)
-
+#define log_info_no_args()    do { fprintf(stderr, GREEN  "[INFO]    " "%s (%s:%d) " NONE "\n", __func__, __FILE__, __LINE__); } while(0)
 /* LOG_LEVEL controls */
 #if LOG_LEVEL < DEBUG
 #undef log_debug
