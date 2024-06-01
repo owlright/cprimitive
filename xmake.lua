@@ -1,5 +1,12 @@
 add_rules("mode.debug", "mode.release")
 add_requires("glad 0.1.36", "glfw 3.4", "opencl")
+
+on_config(function (target)
+    if target:has_tool("cxx", "cl", "clang_cl") then
+        target:add("cxflags", "/utf-8") -- 对于 cl.exe，当你编译 C++ 代码时，add_cxxflags() 添加的标志和 add_cxflags() 添加的标志都会被使用。当你编译 C 代码时，只有 add_cxflags() 添加的标志会被使用。
+    end
+end)
+
 target("primitive")
     set_kind("binary")
     add_files("*.c")
@@ -11,6 +18,11 @@ target("opcl")
     add_files("test_opencl.cc")
     add_packages("opencl")
     set_targetdir("$(projectdir)/bin/$(mode)")
+
+target("shape")
+    set_kind("binary")
+    -- add_headerfiles("shape.h", "triangle.h")
+    add_files("test_shape.c", "shape.c", "triangle.c", "rasterizer.c")
 
 includes("examples")
 --
