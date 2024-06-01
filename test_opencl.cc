@@ -8,7 +8,9 @@
 using namespace std;
 
 #define NWITEMS 6
-
+const int Ndim = 400;
+const int Mdim = 300;
+const int Pdim = 400;
 #pragma comment(lib, "OpenCL.lib")
 
 // 把文本文件读入一个 string 中
@@ -38,6 +40,53 @@ int convertToString(const char* filename, std::string& s)
     return 1;
 }
 
+void matrix_multiply(int Ndim, int Mdim, int Pdim, float* A, float* B, float* C)
+{
+    int i, j, k;
+    for (i = 0; i < Ndim; i++) {
+        for (j = 0; j < Mdim; j++) {
+            C[i * Mdim + j] = 0;
+            for (k = 0; k < Pdim; k++) {
+                C[i * Mdim + j] += A[i * Pdim + k] * B[k * Mdim + j];
+            }
+        }
+    }
+}
+void test_cmatrix_mul()
+{
+    // const int Ndim = 40;
+    // const int Mdim = 30;
+    // const int Pdim = 40;
+    int szA = Ndim * Pdim;
+    int szB = Pdim * Mdim;
+    int szC = Ndim * Mdim;
+
+    float* A = (float*)malloc(szA * sizeof(float));
+    float* B = (float*)malloc(szB * sizeof(float));
+    float* C = (float*)malloc(szC * sizeof(float));
+
+    int i;
+    for (i = 0; i < szA; i++)
+        A[i] = (float)((float)i + 1.0);
+    for (i = 0; i < szB; i++)
+        B[i] = (float)((float)i + 1.0);
+
+    clock_t start = clock();
+    matrix_multiply(Ndim, Mdim, Pdim, A, B, C);
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("纯C矩阵乘法执行时间: %.9f sec\n", time_spent);
+    // printf("\n准确结果Array C:\n");
+    // for (i = 0; i < Ndim; i++) {
+    //     for (int j = 0; j < Mdim; j++)
+    //         printf("%.3f\t", C[i * Mdim + j]);
+    //     printf("\n");
+    // }
+
+    free(A);
+    free(B);
+    free(C);
+}
 int main()
 {
     cl_uint status;
@@ -67,9 +116,9 @@ int main()
     // 建立要传入从机的数据
     /********  创建内核和内存对象 ********/
 
-    const int Ndim = 4;
-    const int Mdim = 3;
-    const int Pdim = 4;
+    // const int Ndim = 40;
+    // const int Mdim = 30;
+    // const int Pdim = 40;
     int szA = Ndim * Pdim;
     int szB = Pdim * Mdim;
     int szC = Ndim * Mdim;
@@ -99,7 +148,7 @@ int main()
     if (memObjects[0] == NULL || memObjects[1] == NULL || memObjects[2] == NULL)
         perror("Error in clCreateBuffer.\n");
 
-    const char* filename = "Vadd.cl";
+    const char* filename = "../../Vadd.cl";
     std::string sourceStr;
     status = convertToString(filename, sourceStr);
     if (status)
@@ -162,8 +211,8 @@ int main()
     if (status)
         perror("读取时间的时候发生错误\n");
     rum_time = (double)(ev_end_time - ev_start_time);
-    cout << "执行时间为:" << rum_time << endl;
-
+    cout << "OpenCL的矩阵乘法执行时间为:" << rum_time / 1e9 << " sec" << endl;
+    test_cmatrix_mul();
     // 数据拷回 host 内存
     status = clEnqueueReadBuffer(commandQueue, memObjects[2], CL_TRUE, 0,
         sizeof(float) * szC, C, 0, NULL, NULL);
@@ -171,24 +220,24 @@ int main()
         perror("读回数据的时候发生错误\n");
 
     // 结果显示
-    printf("\nArray A:\n");
-    for (i = 0; i < Ndim; i++) {
-        for (j = 0; j < Pdim; j++)
-            printf("%.3f\t", A[i * Pdim + j]);
-        printf("\n");
-    }
-    printf("\nArray B:\n");
-    for (i = 0; i < Pdim; i++) {
-        for (j = 0; j < Mdim; j++)
-            printf("%.3f\t", B[i * Mdim + j]);
-        printf("\n");
-    }
-    printf("\nArray C:\n");
-    for (i = 0; i < Ndim; i++) {
-        for (j = 0; j < Mdim; j++)
-            printf("%.3f\t", C[i * Mdim + j]);
-        printf("\n");
-    }
+    // printf("\nArray A:\n");
+    // for (i = 0; i < Ndim; i++) {
+    //     for (j = 0; j < Pdim; j++)
+    //         printf("%.3f\t", A[i * Pdim + j]);
+    //     printf("\n");
+    // }
+    // printf("\nArray B:\n");
+    // for (i = 0; i < Pdim; i++) {
+    //     for (j = 0; j < Mdim; j++)
+    //         printf("%.3f\t", B[i * Mdim + j]);
+    //     printf("\n");
+    // }
+    // printf("\nArray C:\n");
+    // for (i = 0; i < Ndim; i++) {
+    //     for (j = 0; j < Mdim; j++)
+    //         printf("%.3f\t", C[i * Mdim + j]);
+    //     printf("\n");
+    // }
 
     cout << endl;
 
