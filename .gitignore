@@ -1,7 +1,8 @@
 .vscode/
+.idea/
 bin/
 cmake-build/
-*.log
+cmake-build-*/
 
 # Xmake cache
 .xmake/
