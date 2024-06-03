@@ -11,12 +11,10 @@ typedef struct {
 } Scanline;
 
 typedef struct {
-    Scanline** lines;
+    Scanline* lines;
     int h;
 } RasterizedLines;
 
 void DestroyRasterizedLines(RasterizedLines* obj);
 
 #endif
-
-
