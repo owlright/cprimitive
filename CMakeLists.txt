@@ -14,7 +14,20 @@ endif()
 add_executable(primitive main.c stb_image.h stb_image_write.h config.h util.h util.c log.h)
 target_link_libraries(primitive glfw glad::glad)
 
-add_subdirectory(gui/)
+macro(SUBDIRLIST result curdir)
+  file(GLOB children RELATIVE ${curdir} ${curdir}/*)
+  set(dirlist "")
+  foreach(child ${children})
+    if(IS_DIRECTORY ${curdir}/${child})
+      list(APPEND dirlist ${child})
+    endif()
+  endforeach()
+  set(${result} ${dirlist})
+endmacro()
+
+# Scan module libraries
+subdirlist(examples_to_build ${CMAKE_CURRENT_SOURCE_DIR}/examples)
+# message(STATUS "Found examples: ${examples_to_build}")
 add_subdirectory(examples/)
 
 add_executable(shape shape.c rasterizer.c triangle.c test_shape.c)
