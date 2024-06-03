@@ -12,7 +12,7 @@ typedef struct {
     int h;
 } RasterizedLines;
 
-void DestroyRasterizedLines(void* obj);
+void DestroyRasterizedLines(RasterizedLines* obj);
 
 #endif
 
