@@ -8,6 +8,6 @@ typedef struct {
     Point p1, p2;
 } Line;
 
-Line* NewLine(size_t x1, size_t y1, size_t x2, size_t y2);
+Line* NewLine(int x1, int y1, int x2, int y2);
 
 #endif
