@@ -8,16 +8,16 @@ typedef struct Shape Shape;
 
 // ! 接口只包含函数
 struct IShape {
-    RasterizedLines (*Rasterize)(IShape* this);
-    void (*Destroy)(IShape* this);
+    RasterizedLines (*Rasterize)(Shape* this);
+    void (*Destroy)(Shape* this);
 };
-
-// ! 多态函数
-RasterizedLines Rasterize(IShape* this);
-void Destroy(IShape* this);
 
 // ! 基类
 struct Shape {
     IShape* methods;
 };
+
+// ! 基类方法
+RasterizedLines Rasterize(Shape* this);
+void Destroy(Shape* this);
 #endif
