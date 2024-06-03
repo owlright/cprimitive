@@ -3,8 +3,11 @@
 
 #include <stdint.h>
 typedef struct {
-    int Y, X1, X2;
-    uint32_t Alpha;
+    int x, y;
+} Point;
+typedef struct {
+    int y, x1, x2;
+    uint32_t alpha;
 } Scanline;
 
 typedef struct {
