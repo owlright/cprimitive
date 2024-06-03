@@ -12,7 +12,7 @@ static RasterizedLines RasterizeLine(void* obj)
     }
     Scanline** lines = calloc(h, sizeof(Scanline*));
     // Bresenham's line algorithm
- 
+
     RasterizedLines result = { lines, h };
     return result;
 }
@@ -22,7 +22,7 @@ static IShape methods = {
     .Destroy = NULL
 };
 
-Line* newLine(size_t x1, size_t y1, size_t x2, size_t y2)
+Line* NewLine(size_t x1, size_t y1, size_t x2, size_t y2)
 {
     Line* c = malloc(sizeof(Line));
     c->methods = &methods;

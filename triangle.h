@@ -10,7 +10,7 @@ typedef struct {
     int X3, Y3;
 } Triangle;
 
-Triangle* newTriangle();
+Triangle* NewTriangle();
 
 #endif
 

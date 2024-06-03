@@ -5,7 +5,7 @@
 
 int main()
 {
-    Triangle* t = newTriangle();
+    Triangle* t = NewTriangle();
     RasterizedLines lines = Rasterize(t);
     DestroyRasterizedLines(&lines);
     free(t);

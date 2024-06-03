@@ -20,7 +20,7 @@ static IShape triangle_methods = {
     .Destroy = NULL
 };
 
-Triangle* newTriangle()
+Triangle* NewTriangle()
 {
     Triangle* c = malloc(sizeof(Triangle));
     c->methods = &triangle_methods;
