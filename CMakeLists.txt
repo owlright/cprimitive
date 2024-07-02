@@ -12,6 +12,8 @@ if(MSVC)
 endif()
 add_library(primitive STATIC util.c shape.c rasterizer.c triangle.c line.c)
 target_link_libraries(primitive PRIVATE glfw glad::glad)
+
+include(cmake/macros.cmake)
 # Scan module libraries
 subdirlist(examples_to_build ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 # message(STATUS "Found examples: ${examples_to_build}")
