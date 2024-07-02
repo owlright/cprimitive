@@ -74,6 +74,7 @@ static RasterizedLines RasterizeLine(Shape* obj)
             lines[j].y = dy > 0 ? y : Y0 - j;
             lines[j].x1 = x;
         }
+        lines[j].x2 = x;
         if (D > 0) {
             y = y + 1;
             D = D - 2 * dx;
