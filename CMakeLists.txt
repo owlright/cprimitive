@@ -22,3 +22,5 @@ add_subdirectory(examples/)
 add_executable(shape test_shape.c)
 target_link_libraries(shape PRIVATE primitive glfw glad::glad)
 
+add_subdirectory(test)
+
