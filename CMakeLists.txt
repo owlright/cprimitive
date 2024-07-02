@@ -19,5 +19,6 @@ subdirlist(examples_to_build ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 # message(STATUS "Found examples: ${examples_to_build}")
 add_subdirectory(examples/)
 
-add_executable(shape shape.c rasterizer.c triangle.c test_shape.c)
-add_executable(line shape.c line.c rasterizer.c test_line.c)
+add_executable(shape test_shape.c)
+target_link_libraries(shape PRIVATE primitive glfw glad::glad)
+
