@@ -32,12 +32,30 @@ static RasterizedLines RasterizeLine(Shape* obj)
     for (int i = 0; i <= dy_abs; i++) {
         lines[i].x1 = -1;
     }
-    // ! Special case for vertical lines
+
+    // ! Special case for vertical lines and horizontal lines
     if (dx == 0) {
         for (int j = 0; j <= dy; j++) {
             lines[j].y = Y0 + j;
             lines[j].x1 = X0;
             lines[j].x2 = X0;
+        }
+        RasterizedLines result = { lines, dy_abs + 1 };
+        return result;
+    }
+    if (dy == 0) {
+        lines[0].y = Y0;
+        lines[0].x1 = X0;
+        lines[0].x2 = X1;
+        RasterizedLines result = { lines, 1 };
+        return result;
+    }
+    if (dx == dy_abs) {
+        for (int i = 0; i <= dx; i++) {
+            int j = dy > 0 ? i : -i;
+            lines[i].y = Y0 + j;
+            lines[i].x1 = X0 + i;
+            lines[i].x2 = X0 + i;
         }
         RasterizedLines result = { lines, dy_abs + 1 };
         return result;
