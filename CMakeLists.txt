@@ -10,7 +10,7 @@ if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
     add_compile_options("/utf-8")
 endif()
-add_library(primitive STATIC util.c shape.c rasterizer.c triangle.c line.c)
+add_library(primitive STATIC util.c shape.c rasterizer.c triangle.c line.c image.c)
 target_link_libraries(primitive PRIVATE glfw glad::glad)
 
 include(cmake/macros.cmake)
