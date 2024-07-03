@@ -3,49 +3,25 @@
 #include <stdlib.h>
 #include "shape.h"
 #include "line.h"
-
+#define CASES_NUMBER 4
 int main()
 {
-    {
-        // case 1:  (1, 1) -> (11, 5) slope 0.4 < 1
-        Line* t = NewLine(1, 1, 11, 5);
+    int positions[CASES_NUMBER][4] = {
+        { 1, 1, 11, 1 },
+        { 1, 1, 1, 11 },
+        { 1, 1, 5, 5 },
+        { 1, 5, 5, 1 },
+    };
+    for (int i = 0; i < CASES_NUMBER; i++) {
+        printf("case %d: (%d, %d) -> (%d, %d)\n", i + 1, positions[i][0], positions[i][1], positions[i][2], positions[i][3]);
+        Line* t = NewLine(positions[i][0], positions[i][1], positions[i][2], positions[i][3]);
         RasterizedLines lines = Rasterize((Shape*)t);
         for (int i = 0; i < lines.h; i++) {
-            printf("y: %-4d x1: %-4d x2: %-4d\n", lines.lines[i].y, lines.lines[i].x1, lines.lines[i].x2);
+            printf("x1: %-4d x2: %-4d y: %-4d\n",  lines.lines[i].x1, lines.lines[i].x2, lines.lines[i].y);
         }
         DestroyRasterizedLines(&lines);
         free(t);
+        printf("\n");
     }
-    {
-        // case 2:  (1, 1) -> (11, 5) slope 2.5 < 1
-        Line* t = NewLine(1, 1, 5, 11);
-        RasterizedLines lines = Rasterize((Shape*)t);
-        for (int i = 0; i < lines.h; i++) {
-            printf("y: %-4d x1: %-4d x2: %-4d\n", lines.lines[i].y, lines.lines[i].x1, lines.lines[i].x2);
-        }
-        DestroyRasterizedLines(&lines);
-        free(t);
-    }
-    {
-        // case 3:  (11, 5) -> (1, 1)
-        Line* t = NewLine(11, 5, 1, 1);
-        RasterizedLines lines = Rasterize((Shape*)t);
-        for (int i = 0; i < lines.h; i++) {
-            printf("y: %-4d x1: %-4d x2: %-4d\n", lines.lines[i].y, lines.lines[i].x1, lines.lines[i].x2);
-        }
-        DestroyRasterizedLines(&lines);
-        free(t);
-    }
-    {
-        // case 4:  (1, 1) -> (1, 5) slope infinty
-        Line* t = NewLine(1, 1, 1, 5);
-        RasterizedLines lines = Rasterize((Shape*)t);
-        for (int i = 0; i < lines.h; i++) {
-            printf("y: %-4d x1: %-4d x2: %-4d\n", lines.lines[i].y, lines.lines[i].x1, lines.lines[i].x2);
-        }
-        DestroyRasterizedLines(&lines);
-        free(t);
-    }
-
     return 0;
 }
